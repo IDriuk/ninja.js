@@ -6,10 +6,12 @@ const Row = (props) => {
   return (
     <tr>
       <td>
-        <a href={row.edit_path}>
-          {row.name}
-        </a><br />
-        <small>{row.email}</small>
+        <div className="user-name">
+          <a href={row.edit_path}>
+            {row.name}
+          </a>
+          <small>{row.email}</small>
+        </div>
       </td>
     </tr>
   )

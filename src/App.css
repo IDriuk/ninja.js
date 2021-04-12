@@ -17,3 +17,8 @@
 .pagination li {
   display: inline-block;
 }
+
+.user-name{
+  display: flex;
+  flex-direction: column;
+}
