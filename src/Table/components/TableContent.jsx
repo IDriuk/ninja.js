@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Row from './Row'
+import { TableContext } from '../store'
 
-const TableContent = ({rows}) => {
+const TableContent = () => {
+  const { currentPageRows } = useContext(TableContext)
+
   return (
     <table>
       <tbody>
-        { rows.map(row => <Row key={row.per_id} row={row} />) }
+        { currentPageRows.map(row => <Row key={row.per_id} row={row} />) }
       </tbody>
     </table>
   )
