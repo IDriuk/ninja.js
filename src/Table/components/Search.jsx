@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { TableContext } from '../store'
 
-const Search = (props) => {
-  const { onSearch } = props
+const Search = () => {
+  const { onSearchChange } = useContext(TableContext)
 
   return (
     <div className="p-b-1">
@@ -9,7 +10,7 @@ const Search = (props) => {
         type="search"
         className="form-control"
         placeholder="Søg brugere"
-        onChange={onSearch} />
+        onChange={onSearchChange} />
     </div>
   )
 }

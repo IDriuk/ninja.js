@@ -20,9 +20,15 @@ const Table = (props) => {
   } = useStore(props)
 
   return(
-    <TableContext.Provider>
+    <TableContext.Provider value={{
+      currentPageRows,
+      currentPageIndex,
+      pagesCount,
+      onSearchChange,
+      onPageChange
+    }}>
       <div>
-        <Search onSearch={onSearchChange} />
+        <Search />
         <TableContent rows={currentPageRows} />
         <Pagination
           current={currentPageIndex}
