@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react'
 
+const DEFAULT_ROWS_PER_PAGE = 40
+
 export const TableContext = React.createContext();
 
 export const withStore = Component => props => {
@@ -20,37 +22,21 @@ export const useStore = (props) => {
   )
 
   const onSearchChange = (event) =>  {
-    const { rows } = props
-    const text = event.target.value
-    let rowsFound = rows
-
-    if (text) {
-      rowsFound = rows.filter((row) => {
-        return row.name.toLowerCase().search(text.toLowerCase()) > -1 ||
-         (row.email && row.email.toLowerCase().search(text.toLowerCase()) > -1)
-      })
-    }
-
+    const foundedRows = filterRows( props.rows, event.target.value)
     setTableState({
       ...tableState,
-      rows: rowsFound,
+      rows: foundedRows,
       currentPageIndex: 0,
-      pagesCount: calculatePagesCount({rows: rowsFound, rowsPerPage: props.rowsPerPage})
+      pagesCount: calculatePagesCount({rows: foundedRows, rowsPerPage: props.rowsPerPage})
     })
   }
 
   const onPageChange = (pageNumber) => {
     setTableState({...tableState, currentPageIndex: pageNumber })
   }
-
-  const rowsInPageNumber = (pageNumber) => {
-    const { rowsPerPage } = props || 40
-    const startIndex = pageNumber * rowsPerPage
-    return [startIndex, startIndex + rowsPerPage]
-  }
   
   const { rows, currentPageIndex, pagesCount } = tableState
-  const currentPageRows = rows.slice(...rowsInPageNumber(currentPageIndex))
+  const currentPageRows = getPageRows(rows, currentPageIndex, props.rowsPerPage)
 
   return {
     currentPageRows,
@@ -61,8 +47,25 @@ export const useStore = (props) => {
   }
 }
 
+function filterRows(rows, searchString) {
+  if (searchString) {
+    return rows.filter((row) => {
+      return row.name.toLowerCase().search(searchString.toLowerCase()) > -1 ||
+        (row.email && row.email.toLowerCase().search(searchString.toLowerCase()) > -1)
+    })
+  }
+
+  return rows
+}
+
+function getPageRows(rows, currentPageIndex, rowsPerPage){
+  rowsPerPage = rowsPerPage || DEFAULT_ROWS_PER_PAGE
+  const startIndex = currentPageIndex * rowsPerPage
+  return rows.slice(startIndex, startIndex + rowsPerPage)
+}
+
 function calculatePagesCount({rows, rowsPerPage}){
-  rowsPerPage = rowsPerPage || 40
+  rowsPerPage = rowsPerPage || DEFAULT_ROWS_PER_PAGE
   if (rowsPerPage === 0) return 0
   return Math.ceil(rows.length / rowsPerPage)
 }
