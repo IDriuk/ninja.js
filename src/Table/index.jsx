@@ -54,8 +54,8 @@ const Table = (props) => {
   
   const { rows, currentPageNumber, totalNumberOfPages } = tableState
   const rowsToRender = rows
-    .map(row => <Row key={row.per_id} row={row} />)
     .slice(...rowsInPageNumber(currentPageNumber))
+    .map(row => <Row key={row.per_id} row={row} />)
 
   return(
     <TableContext.Provider>
