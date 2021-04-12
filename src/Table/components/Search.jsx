@@ -1,17 +1,18 @@
 import React from 'react'
+import { withStore } from '../store'
 
 const Search = (props) => {
-  const { onSearch } = props
+  const { onSearchChange } = props
 
   return (
-    <div className="p-b-1">
+    <div className="pb-1">
       <input
         type="search"
         className="form-control"
         placeholder="Søg brugere"
-        onChange={onSearch.bind(this)} />
+        onChange={onSearchChange} />
     </div>
   )
 }
 
-export default Search
+export default withStore(Search)
