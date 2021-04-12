@@ -4,7 +4,7 @@ import Pagination from './Pagination'
 import Row from './Row'
 import Search from './Search'
 
-class DataTable extends React.Component {
+class Table extends React.Component {
   state = {
     rows: this.props.rows,
     currentPageNumber: 0,
@@ -73,4 +73,4 @@ class DataTable extends React.Component {
   }
 }
 
-export default DataTable
+export default Table
