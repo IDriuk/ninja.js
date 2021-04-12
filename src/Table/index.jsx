@@ -28,7 +28,7 @@ class Table extends React.Component {
 
     if (text) {
       rowsFound = rows.filter((row) => {
-        return row.name1.toLowerCase().search(text.toLowerCase()) > -1 ||
+        return row.name.toLowerCase().search(text.toLowerCase()) > -1 ||
          (row.email && row.email.toLowerCase().search(text.toLowerCase()) > -1)
       })
     }
