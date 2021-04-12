@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-import Pagination from './components/Pagination'
-import Row from './components/Row'
 import Search from './components/Search'
+import TableContent from './components/TableContent'
+import Pagination from './components/Pagination'
 
 import { TableContext } from './store'
 
@@ -53,19 +53,13 @@ const Table = (props) => {
   }
   
   const { rows, currentPageNumber, totalNumberOfPages } = tableState
-  const rowsToRender = rows
-    .slice(...rowsInPageNumber(currentPageNumber))
-    .map(row => <Row key={row.per_id} row={row} />)
+  const rowsToRender = rows.slice(...rowsInPageNumber(currentPageNumber))
 
   return(
     <TableContext.Provider>
       <div>
         <Search onSearch={search} />
-        <table>
-          <tbody>
-            { rowsToRender }
-          </tbody>
-        </table>
+        <TableContent rows={rowsToRender} />
         <Pagination
           currentPageNumber={currentPageNumber}
           totalNumberOfPages={totalNumberOfPages}
