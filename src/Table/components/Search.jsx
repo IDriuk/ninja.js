@@ -5,7 +5,7 @@ const Search = (props) => {
   const { onSearchChange } = props
 
   return (
-    <div className="p-b-1">
+    <div className="pb-1">
       <input
         type="search"
         className="form-control"
