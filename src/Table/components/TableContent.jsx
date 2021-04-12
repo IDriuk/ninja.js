@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Row from './Row'
-import { TableContext } from '../store'
+import { withStore } from '../store'
 
-const TableContent = () => {
-  const { currentPageRows } = useContext(TableContext)
+const TableContent = (props) => {
+  const { currentPageRows } = props
 
   return (
     <table>
@@ -14,4 +14,4 @@ const TableContent = () => {
   )
 }
 
-export default TableContent
+export default withStore(TableContent)

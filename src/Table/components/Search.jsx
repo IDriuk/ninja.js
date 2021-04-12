@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import { TableContext } from '../store'
+import React from 'react'
+import { withStore } from '../store'
 
-const Search = () => {
-  const { onSearchChange } = useContext(TableContext)
+const Search = (props) => {
+  const { onSearchChange } = props
 
   return (
     <div className="p-b-1">
@@ -15,4 +15,4 @@ const Search = () => {
   )
 }
 
-export default Search
+export default withStore(Search)

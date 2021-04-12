@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import PaginationControl from './PaginationControl'
-import { TableContext } from '../store'
+import { withStore } from '../store'
 
-const Pagination = () => {
+const Pagination = (props) => {
   
   const { 
     currentPageIndex,
     pagesCount,
     onPageChange 
-  } = useContext(TableContext)
+  } = props
   
   const pagesIndexes =  [...Array(pagesCount).keys()]
 
@@ -29,4 +29,4 @@ const Pagination = () => {
   )
 }
 
-export default Pagination
+export default withStore(Pagination)

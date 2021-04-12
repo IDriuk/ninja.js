@@ -1,6 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 export const TableContext = React.createContext();
+
+export const withStore = Component => props => {
+  const storeProps = useContext(TableContext)
+  const enhancedProps = {...props, ...storeProps} 
+  return (
+    <Component {...enhancedProps} />
+  )
+}
 
 export const useStore = (props) => {
   const [tableState, setTableState] = useState(
