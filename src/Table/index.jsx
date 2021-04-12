@@ -16,7 +16,7 @@ const Table = (props) => {
     currentPageNumber,
     totalNumberOfPages,
     search,
-    changeToPageNumber
+    onPageChange
   } = useStore(props)
 
   return(
@@ -27,7 +27,7 @@ const Table = (props) => {
         <Pagination
           currentPageNumber={currentPageNumber}
           totalNumberOfPages={totalNumberOfPages}
-          onChange={changeToPageNumber} />
+          onChange={onPageChange} />
       </div>
     </TableContext.Provider>
   )

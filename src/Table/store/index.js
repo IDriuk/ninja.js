@@ -31,7 +31,7 @@ export const useStore = (props) => {
     })
   }
 
-  const changeToPageNumber = (pageNumber) => {
+  const onPageChange = (pageNumber) => {
     setTableState({...tableState, currentPageNumber: pageNumber })
   }
 
@@ -49,7 +49,7 @@ export const useStore = (props) => {
     currentPageNumber,
     totalNumberOfPages,
     search,
-    changeToPageNumber
+    onPageChange
   }
 }
 
