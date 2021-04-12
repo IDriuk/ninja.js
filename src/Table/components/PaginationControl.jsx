@@ -6,7 +6,7 @@ const PaginationControl = (props) => {
   const isActivePage = current === pageIndex
   const pageNumber = pageIndex + 1
 
-  const click = (event) => {
+  const onClick = (event) => {
     event.preventDefault()
     onChange(pageIndex)
   }
@@ -15,7 +15,7 @@ const PaginationControl = (props) => {
     <li className="page-item mr-1">
       <button 
         className={`page-link ${isActivePage ? 'button-outline' : ''}`} 
-        onClick={click} >
+        onClick={onClick} >
           {pageNumber}
       </button>
     </li>
