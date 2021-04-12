@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Pagination from './components/Pagination'
 import Row from './components/Row'
@@ -6,25 +6,24 @@ import Search from './components/Search'
 
 import { TableContext } from './store'
 
-class Table extends React.Component {
-  state = {
-    rows: this.props.rows,
-    currentPageNumber: 0,
-    totalNumberOfPages: this.calculateTotalNumberOfPages(this.props.rows)
-  }
+const calculateTotalNumberOfPages = ({rows, rowsPerPage}) => {
+  rowsPerPage = rowsPerPage || 40
+  if (rowsPerPage === 0) return 0
+  return Math.ceil(rows.length / rowsPerPage)
+}
 
-  static defaultProps = {
-    rowsPerPage: 40
-  }
+const Table = (props) => {
 
-  calculateTotalNumberOfPages(rows) {
-    const { rowsPerPage } = this.props
-    if (rowsPerPage === 0) return 0
-    return Math.ceil(rows.length / rowsPerPage)
-  }
+  const [tableState, setTableState] = useState(
+    {
+      rows: props.rows,
+      currentPageNumber: 0,
+      totalNumberOfPages: calculateTotalNumberOfPages(props)
+    }
+  )
 
-  search(event) {
-    const { rows } = this.props
+  const search = (event) =>  {
+    const { rows } = props
     const text = event.target.value
     let rowsFound = rows
 
@@ -35,46 +34,47 @@ class Table extends React.Component {
       })
     }
 
-    this.setState({
+    setTableState({
+      ...tableState,
       rows: rowsFound,
       currentPageNumber: 0,
-      totalNumberOfPages: this.calculateTotalNumberOfPages(rowsFound)
+      totalNumberOfPages: calculateTotalNumberOfPages({rows: rowsFound, rowsPerPage: props.rowsPerPage})
     })
   }
 
-  changeToPageNumber(pageNumber) {
-    this.setState({ currentPageNumber: pageNumber })
+  const changeToPageNumber = (pageNumber) => {
+    setTableState({...tableState, currentPageNumber: pageNumber })
   }
 
-  rowsInPageNumber(pageNumber) {
-    const { rowsPerPage } = this.props
+  const rowsInPageNumber = (pageNumber) => {
+    const { rowsPerPage } = props || 40
     const startIndex = pageNumber * rowsPerPage
     return [startIndex, startIndex + rowsPerPage]
   }
+  
+  const { rows, currentPageNumber, totalNumberOfPages } = tableState
+  const rowsToRender = rows
+    .map(row => <Row key={row.per_id} row={row} />)
+    .slice(...rowsInPageNumber(currentPageNumber))
 
-  render() {
-    const { rows, currentPageNumber, totalNumberOfPages } = this.state
-    const rowsToRender = rows
-      .map(row => <Row key={row.per_id} row={row} />)
-      .slice(...this.rowsInPageNumber(currentPageNumber))
-
-    return(
-      <TableContext.Provider>
-        <div>
-          <Search onSearch={this.search.bind(this)} />
-          <table>
-            <tbody>
-              { rowsToRender }
-            </tbody>
-          </table>
-          <Pagination
-            currentPageNumber={currentPageNumber}
-            totalNumberOfPages={totalNumberOfPages}
-            onChange={this.changeToPageNumber.bind(this)} />
-        </div>
-      </TableContext.Provider>
-    )
-  }
+  return(
+    <TableContext.Provider>
+      <div>
+        <Search onSearch={search} />
+        <table>
+          <tbody>
+            { rowsToRender }
+          </tbody>
+        </table>
+        <Pagination
+          currentPageNumber={currentPageNumber}
+          totalNumberOfPages={totalNumberOfPages}
+          onChange={changeToPageNumber} />
+      </div>
+    </TableContext.Provider>
+  )
 }
+
+
 
 export default Table
