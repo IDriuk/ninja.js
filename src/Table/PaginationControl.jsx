@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Page = (props) => {
+const PaginationControl = (props) => {
   const { pageNumber, currentPageNumber, onChange } = props
 
   const isActivePage = () => {
@@ -30,4 +30,4 @@ const Page = (props) => {
   )
 }
 
-export default Page
+export default PaginationControl

@@ -1,13 +1,13 @@
 import React from 'react'
 
-import Page from './Page'
+import PaginationControl from './PaginationControl'
 
 const Pagination = ({ currentPageNumber, totalNumberOfPages, onChange }) => {
   const pages =
     Array
       .from(Array(totalNumberOfPages).keys())
       .map(pageNumber => {
-        return <Page
+        return <PaginationControl
           key={pageNumber}
           currentPageNumber={currentPageNumber}
           pageNumber={pageNumber}
