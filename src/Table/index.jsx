@@ -10,30 +10,12 @@ import {
 } from './store'
 
 const Table = (props) => {
-
-  const {
-    currentPageRows,
-    currentPageIndex,
-    pagesCount,
-    onSearchChange,
-    onPageChange
-  } = useStore(props)
-
   return(
-    <TableContext.Provider value={{
-      currentPageRows,
-      currentPageIndex,
-      pagesCount,
-      onSearchChange,
-      onPageChange
-    }}>
+    <TableContext.Provider value={useStore(props)}>
       <div>
-        <Search />
-        <TableContent rows={currentPageRows} />
-        <Pagination
-          current={currentPageIndex}
-          count={pagesCount}
-          onChange={onPageChange} />
+        <Search/>
+        <TableContent/>
+        <Pagination/>
       </div>
     </TableContext.Provider>
   )

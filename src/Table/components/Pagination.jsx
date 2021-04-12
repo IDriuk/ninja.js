@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import PaginationControl from './PaginationControl'
+import { TableContext } from '../store'
 
-const Pagination = ({ current, count, onChange }) => {
-  const pagesIndexes =  [...Array(count).keys()]
+const Pagination = () => {
+  
+  const { 
+    currentPageIndex,
+    pagesCount,
+    onPageChange 
+  } = useContext(TableContext)
+  
+  const pagesIndexes =  [...Array(pagesCount).keys()]
 
   if (pagesIndexes.length <= 1) {
     return null
@@ -13,9 +21,9 @@ const Pagination = ({ current, count, onChange }) => {
     <ul className="pagination">
       {pagesIndexes.map(pageIndex =>  <PaginationControl
           key={pageIndex}
-          current={current}
+          current={currentPageIndex}
           pageIndex={pageIndex}
-          onChange={onChange} />
+          onChange={onPageChange} />
       )}
     </ul>
   )
