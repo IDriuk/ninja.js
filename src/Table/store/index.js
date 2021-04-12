@@ -11,7 +11,7 @@ export const useStore = (props) => {
     }
   )
 
-  const search = (event) =>  {
+  const onSearchChange = (event) =>  {
     const { rows } = props
     const text = event.target.value
     let rowsFound = rows
@@ -48,7 +48,7 @@ export const useStore = (props) => {
     rowsToRender,
     currentPageNumber,
     totalNumberOfPages,
-    search,
+    onSearchChange,
     onPageChange
   }
 }
