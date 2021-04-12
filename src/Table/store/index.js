@@ -6,8 +6,8 @@ export const useStore = (props) => {
   const [tableState, setTableState] = useState(
     {
       rows: props.rows,
-      currentPageNumber: 0,
-      totalNumberOfPages: calculateTotalNumberOfPages(props)
+      currentPageIndex: 0,
+      pagesCount: calculatePagesCount(props)
     }
   )
 
@@ -26,13 +26,13 @@ export const useStore = (props) => {
     setTableState({
       ...tableState,
       rows: rowsFound,
-      currentPageNumber: 0,
-      totalNumberOfPages: calculateTotalNumberOfPages({rows: rowsFound, rowsPerPage: props.rowsPerPage})
+      currentPageIndex: 0,
+      pagesCount: calculatePagesCount({rows: rowsFound, rowsPerPage: props.rowsPerPage})
     })
   }
 
   const onPageChange = (pageNumber) => {
-    setTableState({...tableState, currentPageNumber: pageNumber })
+    setTableState({...tableState, currentPageIndex: pageNumber })
   }
 
   const rowsInPageNumber = (pageNumber) => {
@@ -41,19 +41,19 @@ export const useStore = (props) => {
     return [startIndex, startIndex + rowsPerPage]
   }
   
-  const { rows, currentPageNumber, totalNumberOfPages } = tableState
-  const rowsToRender = rows.slice(...rowsInPageNumber(currentPageNumber))
+  const { rows, currentPageIndex, pagesCount } = tableState
+  const currentPageRows = rows.slice(...rowsInPageNumber(currentPageIndex))
 
   return {
-    rowsToRender,
-    currentPageNumber,
-    totalNumberOfPages,
+    currentPageRows,
+    currentPageIndex,
+    pagesCount,
     onSearchChange,
     onPageChange
   }
 }
 
-function calculateTotalNumberOfPages({rows, rowsPerPage}){
+function calculatePagesCount({rows, rowsPerPage}){
   rowsPerPage = rowsPerPage || 40
   if (rowsPerPage === 0) return 0
   return Math.ceil(rows.length / rowsPerPage)

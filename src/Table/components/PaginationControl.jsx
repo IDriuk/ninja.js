@@ -1,14 +1,14 @@
 import React from 'react'
 
 const PaginationControl = (props) => {
-  const { pageNumber, currentPageNumber, onChange } = props
+  const { pageIndex, current, onChange } = props
 
-  const isActivePage = currentPageNumber === pageNumber
-  const renderedPageNumber = pageNumber + 1
+  const isActivePage = current === pageIndex
+  const pageNumber = pageIndex + 1
 
   const click = (event) => {
     event.preventDefault()
-    onChange(pageNumber)
+    onChange(pageIndex)
   }
 
   return(
@@ -16,7 +16,7 @@ const PaginationControl = (props) => {
       <button 
         className={`page-link ${isActivePage ? 'button-outline' : ''}`} 
         onClick={click} >
-          {renderedPageNumber}
+          {pageNumber}
       </button>
     </li>
   )
