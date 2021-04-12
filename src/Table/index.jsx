@@ -4,6 +4,8 @@ import Pagination from './components/Pagination'
 import Row from './components/Row'
 import Search from './components/Search'
 
+import { TableContext } from './store'
+
 class Table extends React.Component {
   state = {
     rows: this.props.rows,
@@ -57,18 +59,20 @@ class Table extends React.Component {
       .slice(...this.rowsInPageNumber(currentPageNumber))
 
     return(
-      <div>
-        <Search onSearch={this.search.bind(this)} />
-        <table>
-          <tbody>
-            { rowsToRender }
-          </tbody>
-        </table>
-        <Pagination
-          currentPageNumber={currentPageNumber}
-          totalNumberOfPages={totalNumberOfPages}
-          onChange={this.changeToPageNumber.bind(this)} />
-      </div>
+      <TableContext.Provider>
+        <div>
+          <Search onSearch={this.search.bind(this)} />
+          <table>
+            <tbody>
+              { rowsToRender }
+            </tbody>
+          </table>
+          <Pagination
+            currentPageNumber={currentPageNumber}
+            totalNumberOfPages={totalNumberOfPages}
+            onChange={this.changeToPageNumber.bind(this)} />
+        </div>
+      </TableContext.Provider>
     )
   }
 }
